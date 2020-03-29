@@ -9,9 +9,27 @@ module.exports = {
   },
 
   async create(request, response) {
+    function generateRandomOngId() {
+      return crypto.randomBytes(4).toString('HEX');
+    }
+
+    async function getOngById(id) {
+      return await connection('ongs')
+        .select('*')
+        .where({ id: id })
+        .first();
+    }
+
     const { name, email, whatsapp, city, uf } = request.body;
 
-    const id = crypto.randomBytes(4).toString('HEX');
+    let id = generateRandomOngId();
+
+    let ongWithIdExist = await getOngById(id);
+
+    while (ongWithIdExist) {
+      id = generateRandomOngId();
+      ongWithIdExist = await getOngById(id);
+    }
 
     await connection('ongs').insert({
       id,
