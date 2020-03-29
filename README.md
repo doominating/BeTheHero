@@ -61,9 +61,13 @@ npm dev
 
 ## Roadmap
 
-- (**In Progress**) Create backend, frontend and mobile just like the OmniStack Challenge;
+- (**DONE**) Creates backend project;
+- (**DONE**) Creates frontend project;
+- (**DONE**) Creates mobile project;
+- (**IN PROGRESS**) Implements advanced features;
 - Add update ONGs infos feature;
 - Add update Incidents infos feature;
+- Add loading indicator on infinit scroll on incident list in mobile app;
 - Refactoring to improve the code readability;
 
 ## License
