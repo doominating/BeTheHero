@@ -1,12 +1,12 @@
-const connection = require('../database/connection');
+const database = require('../database/database');
 
 module.exports = {
   async index(request, response) {
     const { page = 1, limit = 5 } = request.query;
 
-    const [count] = await connection('incidents').count();
+    const [count] = await database('incidents').count();
 
-    const incidents = await connection('incidents')
+    const incidents = await database('incidents')
       .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
       .limit(limit)
       .offset((page - 1) * limit)
@@ -42,13 +42,17 @@ module.exports = {
     const { id } = request.params;
     const ong_id = request.headers.authorization;
 
-    const incident = await connection('incidents')
+    const incident = await database('incidents')
       .where('id', id)
       .select('ong_id')
       .first();
 
+    if (!incident) {
+      return response.status(404).json({ error: 'Invalid incident.' });
+    }
+
     if (incident.ong_id !== ong_id) {
-      return response.status(401).json({ error: 'Operation not permitted.' });
+      return response.status(401).json({ error: 'Operation not allowed.' });
     }
 
     await connection('incidents')

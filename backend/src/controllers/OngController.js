@@ -1,20 +1,16 @@
-const crypto = require('crypto');
-const connection = require('../database/connection');
+const generateUniqueId = require('../utils/generateUniqueId.js');
+const database = require('../database/database');
 
 module.exports = {
   async index(request, response) {
-    const ongs = await connection('ongs').select('*');
+    const ongs = await database('ongs').select('*');
 
     return response.json(ongs);
   },
 
   async create(request, response) {
-    function generateRandomOngId() {
-      return crypto.randomBytes(4).toString('HEX');
-    }
-
     async function getOngById(id) {
-      return await connection('ongs')
+      return await database('ongs')
         .select('*')
         .where({ id: id })
         .first();
@@ -22,16 +18,16 @@ module.exports = {
 
     const { name, email, whatsapp, city, uf } = request.body;
 
-    let id = generateRandomOngId();
+    let id = generateUniqueId();
 
     let ongWithIdExist = await getOngById(id);
 
     while (ongWithIdExist) {
-      id = generateRandomOngId();
+      id = generateUniqueId();
       ongWithIdExist = await getOngById(id);
     }
 
-    await connection('ongs').insert({
+    await database('ongs').insert({
       id,
       name,
       email,

@@ -1,10 +1,10 @@
-const connection = require('../database/connection');
+const database = require('../database/database');
 
 module.exports = {
   async index(request, response) {
     const ong_id = request.headers.authorization;
 
-    const incidents = await connection('incidents')
+    const incidents = await database('incidents')
       .where('ong_id', ong_id)
       .select('*');
 
