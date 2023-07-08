@@ -12,7 +12,7 @@
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
     "axios": "^0.21.2",
-    "expo": "~36.0.0",
+    "expo": "~49.0.0",
     "expo-constants": "~8.0.0",
     "expo-mail-composer": "^8.1.0",
     "intl": "^1.2.5",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "babel-preset-expo": "~8.0.0"
+    "babel-preset-expo": "~9.5.0"
   },
   "private": true
 }
